@@ -41,31 +41,35 @@ def extract_and_replace(url: str) -> str:
 
     return modified_url
 
+async def send_telegram_message(chat_id: int, text: str):
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    payload = {"chat_id": chat_id, "text": text}
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            result = await response.json()
+            print(f"Sent message response: {result}")  # Debugging
+
 # Webhook endpoint
 @app.post("/api/webhook")  # ✅ Fixed route
 async def webhook(request: Request):
-    try:
-        # Log incoming request
-        update = await request.json()
-        print("Received update:", update)
+    update = await request.json()
+    print("Received update:", update)  # Debugging
 
-        user_input = update.get('message', {}).get('text', '').strip()
+    # Extract chat_id and user message
+    chat_id = update.get("message", {}).get("chat", {}).get("id")
+    user_input = update.get("message", {}).get("text", "").strip()
 
-        if not user_input:
-            return JSONResponse(content={"error": "No text provided"}, status_code=400)
+    if not chat_id or not user_input:
+        return JSONResponse(content={"error": "Invalid request format"}, status_code=400)
 
-        # Process URL
-        modified_url = extract_and_replace(user_input)
+    # Process URL
+    modified_url = extract_and_replace(user_input)
 
-        # Log the processed URL
-        print(f"Processed URL: {modified_url}")
+    # Send a reply to the user
+    await send_telegram_message(chat_id, f"Modified URL: {modified_url}")
 
-        # Return response to Telegram
-        return JSONResponse(content={"message": {"text": f"Modified URL: {modified_url}"}})
-    except Exception as e:
-        # Catch any exception and log it
-        print(f"Error processing request: {e}")
-        return JSONResponse(content={"error": "An error occurred while processing the request."}, status_code=500)
+    return JSONResponse(content={"message": "Processed successfully"})
 
 # Set the Telegram webhook when Vercel starts the app
 @app.on_event("startup")
