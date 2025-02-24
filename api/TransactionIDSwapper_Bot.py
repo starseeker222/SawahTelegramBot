@@ -44,17 +44,28 @@ def extract_and_replace(url: str) -> str:
 # Webhook endpoint
 @app.post("/api/webhook")  # ✅ Fixed route
 async def webhook(request: Request):
-    update = await request.json()
-    user_input = update.get('message', {}).get('text', '').strip()
+    try:
+        # Log incoming request
+        update = await request.json()
+        print("Received update:", update)
 
-    if not user_input:
-        return JSONResponse(content={"error": "No text provided"}, status_code=400)
+        user_input = update.get('message', {}).get('text', '').strip()
 
-    # Process URL
-    modified_url = extract_and_replace(user_input)
+        if not user_input:
+            return JSONResponse(content={"error": "No text provided"}, status_code=400)
 
-    # Send response
-    return JSONResponse(content={"message": {"text": f"Modified URL: {modified_url}"}})
+        # Process URL
+        modified_url = extract_and_replace(user_input)
+
+        # Log the processed URL
+        print(f"Processed URL: {modified_url}")
+
+        # Return response to Telegram
+        return JSONResponse(content={"message": {"text": f"Modified URL: {modified_url}"}})
+    except Exception as e:
+        # Catch any exception and log it
+        print(f"Error processing request: {e}")
+        return JSONResponse(content={"error": "An error occurred while processing the request."}, status_code=500)
 
 # Set the Telegram webhook when Vercel starts the app
 @app.on_event("startup")
