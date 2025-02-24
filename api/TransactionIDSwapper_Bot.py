@@ -29,7 +29,7 @@ def extract_and_replace(url: str) -> str:
     click_id = click_id_match.group(1) if click_id_match else None
 
     # Extract transaction_id
-    transaction_id_match = re.search(r'transaction_id=([^&]+)', url)
+    transaction_id_match = re.search(r'transaction_id%([^&]+)', url)
     transaction_id = transaction_id_match.group(1) if transaction_id_match else None
 
     if not click_id or not transaction_id:
@@ -63,7 +63,6 @@ async def webhook(request: Request):
     if not chat_id or not user_input:
         return JSONResponse(content={"error": "Invalid request format"}, status_code=400)
     
-    print(f"userinput : {user_input}")
     # Process URL
     modified_url = extract_and_replace(user_input)
 
