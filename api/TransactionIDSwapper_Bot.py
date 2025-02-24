@@ -40,7 +40,7 @@ def extract_and_replace(url: str) -> str:
     return modified_url
 
 # Webhook endpoint
-@app.post("/webhook")
+@app.post("api/webhook")
 async def webhook(request: Request):
     update = await request.json()
     user_input = update.get('message', {}).get('text', '').strip()
