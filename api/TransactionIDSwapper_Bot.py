@@ -16,7 +16,7 @@ BASE_URL = "https://app.adjust.com/10h33jqp?campaign=monopoly-kashkick-ios-us-mu
 app = FastAPI()
 
 # Webhook URL - your deployed Vercel URL
-WEBHOOK_URL = "https://sawah-telegram-bot.vercel.app/webhook"  # Ensure HTTPS
+WEBHOOK_URL = "https://sawah-telegram-bot.vercel.app/api/webhook"  # Ensure HTTPS
 
 # Extract click_id and transaction_id from the input URL
 def extract_and_replace(url: str) -> str:
