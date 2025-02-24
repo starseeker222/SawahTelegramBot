@@ -54,7 +54,7 @@ async def webhook(request: Request):
     modified_url = extract_and_replace(user_input)
 
     # Send response
-    return JSONResponse(content={"text": f"Modified URL: {modified_url}"})
+    return JSONResponse(content={"message": {"text": f"Modified URL: {modified_url}"}})
 
 # Set the Telegram webhook when Vercel starts the app
 @app.on_event("startup")
