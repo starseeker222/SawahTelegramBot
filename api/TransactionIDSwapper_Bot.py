@@ -62,9 +62,10 @@ async def webhook(request: Request):
 
     if not chat_id or not user_input:
         return JSONResponse(content={"error": "Invalid request format"}, status_code=400)
-
+    
+    print(user_input)
     # Process URL
-    modified_url = extract_and_replace(user_input.get("text", ""))
+    modified_url = extract_and_replace(user_input)
 
     # Send a reply to the user
     await send_telegram_message(chat_id, f"Modified URL: {modified_url}")
