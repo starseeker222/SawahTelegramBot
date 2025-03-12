@@ -26,7 +26,7 @@ WEBHOOK_URL = "https://sawah-telegram-bot.vercel.app/api/webhook"
 def extract_and_replace(url: str) -> str :
 
     #making replacing pipe characters with %7C
-    url.replace('|', '%7C')
+    url = url.replace('|', '%7C')
 
     print (url)
 
