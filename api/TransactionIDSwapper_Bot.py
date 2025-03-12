@@ -28,6 +28,8 @@ def extract_and_replace(url: str) -> str :
     #making replacing pipe characters with %7C
     url.replace('|', '%7C')
 
+    print (url)
+
     searchRes = url.find('[g%7CScatter][p%7Cios][id%7C17337]_us_incent_cpi')
 
     base_url = ''
