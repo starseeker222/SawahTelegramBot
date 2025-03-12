@@ -25,8 +25,9 @@ WEBHOOK_URL = "https://sawah-telegram-bot.vercel.app/api/webhook"
 # Extract click_id and transaction_id from the input URL
 def extract_and_replace(url: str) -> str :
 
-    print(url)
-    
+    #making replacing pipe characters with %7C
+    url.replace('|', '%7C')
+
     base_url = ''
     modified_url = ''
 
