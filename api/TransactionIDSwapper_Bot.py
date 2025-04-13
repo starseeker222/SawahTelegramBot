@@ -51,7 +51,7 @@ def extract_and_replace(url: str) -> str :
     click_id_match = re.search(r'click_id=([^&]+)', url)
     click_id = click_id_match.group(1) if click_id_match else None
 
-    app_id_match = re.search(r'[id%7C([^]]+)', url)
+    app_id_match = re.search(r'id%7C([^]]+)', url)
     app_id = app_id_match.group(1) if app_id_match else None
 
     # Extract transaction_id
