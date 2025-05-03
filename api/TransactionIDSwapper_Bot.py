@@ -30,19 +30,19 @@ def extract_and_replace(url: str) -> str :
 
     print (url)
 
-    searchRes = any(substr in url for substr in ['[g%7CScatter][p%7Cios]', '_us_incent_cpi_besitos'])
+    isScatter = any(substr in url for substr in ['[g%7CScatter][p%7Cios]', '_us_incent_cpi_besitos'])
 
     base_url = ''
     modified_url = ''
 
     
 
-    match searchRes:
-        case -1 :
+    match isScatter:
+        case False :
             base_url = BASE_URL_MONOPOLY [:]
             modified_url += 'Monopoly URL, '
 
-        case _:
+        case True:
             base_url = BASE_URL_SCATTER[:]
             modified_url += 'Scatter URL, '
                 
