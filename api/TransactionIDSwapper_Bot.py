@@ -30,7 +30,7 @@ def extract_and_replace(url: str) -> str :
 
     print (url)
 
-    searchRes = url.find('[g%7CScatter][p%7Cios]')
+    searchRes = any(substr in url for substr in ['[g%7CScatter][p%7Cios]', '_us_incent_cpi_besitos'])
 
     base_url = ''
     modified_url = ''
@@ -64,6 +64,8 @@ def extract_and_replace(url: str) -> str :
     # Replace placeholders
     if(app_id != None):
         modified_url = modified_url.replace("{app_id}", app_id)
+    else:
+        modified_url = modified_url.replace("{app_id}", '17337')
 
     modified_url = modified_url.replace("{click_id}", click_id)
     modified_url = modified_url.replace("{transaction_id}", transaction_id)
