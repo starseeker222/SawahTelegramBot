@@ -62,7 +62,9 @@ def extract_and_replace(url: str) -> str :
         return "Invalid URL: Missing click_id or transaction_id."
 
     # Replace placeholders
-    modified_url = modified_url.replace("{app_id}", app_id)
+    if(app_id != None):
+        modified_url = modified_url.replace("{app_id}", app_id)
+
     modified_url = modified_url.replace("{click_id}", click_id)
     modified_url = modified_url.replace("{transaction_id}", transaction_id)
 
