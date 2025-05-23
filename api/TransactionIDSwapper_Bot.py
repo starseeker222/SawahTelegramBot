@@ -16,6 +16,8 @@ BASE_URL_MONOPOLY = "https://app.adjust.com/10h33jqp?campaign=monopoly-kashkick-
 
 BASE_URL_SCATTER = "https://app.adjust.com/1dwerd5a?campaign=[g%7CScatter][p%7Cios][id%7C{app_id}]_us_incent_cpi&adgroup=b-9hanppbntx8xiseffj&creative=1462&idfa=&click_id={click_id}&gps_adid=&android_id=%7Bandroid_id%7D&ip_address=174.202.169.245&campaign_id=996&creative_id=%7Bfile_id%7D&affiliate_id=1462&publisher_id=1462&subpublisher_id=efi7me3km0in&tracker_limit=250000&cost_currency=USD&cost_type=CPI&cost_amount=15&install_callback=http%3A%2F%2Fkashkick.go2cloud.org%2Faff_lsr%3Ftransaction_id%{transaction_id}&event_callback_7vnxvp=https%3A%2F%2Fkashkick.go2cloud.org%2Faff_goal%3Fa%3Dlsr%26goal_id%3D3565%26adv_id%3D619%26transaction_id%{transaction_id}&event_callback_jx6si9=https%3A%2F%2Fkashkick.go2cloud.org%2Faff_goal%3Fa%3Dlsr%26goal_id%3D3562%26adv_id%3D619%26transaction_id%{transaction_id}&event_callback_ldwzzy=https%3A%2F%2Fkashkick.go2cloud.org%2Faff_goal%3Fa%3Dlsr%26goal_id%3D3563%26adv_id%3D619%26transaction_id%{transaction_id}&event_callback_wqnypk=https%3A%2F%2Fkashkick.go2cloud.org%2Faff_goal%3Fa%3Dlsr%26goal_id%3D3564%26adv_id%3D619%26transaction_id%{transaction_id}&event_callback_czs0l7=https%3A%2F%2Fkashkick.go2cloud.org%2Faff_goal%3Fa%3Dlsr%26goal_id%3D6273%26adv_id%3D619%26transaction_id%{transaction_id}&event_callback_ekt93n=https%3A%2F%2Fkashkick.go2cloud.org%2Faff_goal%3Fa%3Dlsr%26goal_id%3D6274%26adv_id%3D619%26transaction_id%{transaction_id}&event_callback_2dlynt=https%3A%2F%2Fkashkick.go2cloud.org%2Faff_goal%3Fa%3Dlsr%26goal_id%3D7642%26adv_id%3D619%26transaction_id%{transaction_id}&event_callback_y37v1t=https%3A%2F%2Fkashkick.go2cloud.org%2Faff_goal%3Fa%3Dlsr%26goal_id%3D7949%26adv_id%3D619%26transaction_id%{transaction_id}&event_callback_15h2j9=https%3A%2F%2Fkashkick.go2cloud.org%2Faff_goal%3Fa%3Dlsr%26goal_id%3D7950%26adv_id%3D619%26transaction_id%{transaction_id}"
 
+BASER_URL_FRAKLE = "https://app.adjust.com/1kd24fr4?campaign=KK_Farkle_US_iOS_Besitos&adgroup=Tier2&creative=efi7me3km0in&idfa=&click_id={click_id}&gps_adid=&android_id={android_id}&ip_address=174.207.103.133&campaign_id=1192&creative_id=1514&publisher_id=1514&subpublisher_id=efi7me3km0in&tracker_limit=250000&cost_currency=USD&cost_type=CPI&cost_amount=4.5&install_callback=kashkick_install%26transaction_id%{transaction_id}&event_callback_tr536o=kashkick_event%26goal_id%3D6993%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_3rk1mg=kashkick_event%26goal_id%3D6994%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_ldfmlg=kashkick_event%26goal_id%3D6992%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_cr6ffy=kashkick_event%26goal_id%3D6991%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_idelug=kashkick_event%26goal_id%3D6987%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_q4i5nl=kashkick_event%26goal_id%3D6988%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_eibbsi=kashkick_event%26goal_id%3D9183%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_vvf1sk=kashkick_event%26goal_id%3D9184%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_ylbikw=kashkick_event%26goal_id%3D8234%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_pn0avk=kashkick_event%26goal_id%3D8313%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_qnegw6=kashkick_event%26goal_id%3D9181%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_s06459=kashkick_event%26goal_id%3D9182%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_j7bc5x=kashkick_event%26goal_id%3D9185%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_e5okmh=kashkick_event%26goal_id%3D9186%26adv_id%3D635%26transaction_id%{transaction_id}&event_callback_uwiue5=kashkick_event%26goal_id%3D9187%26adv_id%3D635%26transaction_id%{transaction_id}"
+
 # FastAPI app
 app = FastAPI()
 
@@ -39,8 +41,14 @@ def extract_and_replace(url: str) -> str :
 
     match isScatter:
         case False :
-            base_url = BASE_URL_MONOPOLY [:]
-            modified_url += 'Monopoly URL, '
+
+            # Is frakkle
+            if any(substr in  url for substr in ['KK_Farkle_US_iOS']):
+                base_url = BASER_URL_FRAKLE[:]
+                modified_url += 'Frakkle URL, '
+            else:
+                base_url = BASE_URL_MONOPOLY [:]
+                modified_url += 'Monopoly URL, '
 
         case True:
             base_url = BASE_URL_SCATTER[:]
