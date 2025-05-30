@@ -67,7 +67,7 @@ def extract_and_replace(url: str) -> str :
     label_match = re.search(r'label=([^&]+)', url)
     label = label_match.group(1) if label_match else None
 
-    ip_address_match = re.search(r'ipd_address=([^&]+)', url)
+    ip_address_match = re.search(r'ip_address=([^&]+)', url)
     ip_address = ip_address_match.group(1) if ip_address_match else None
     #endregion 
 
