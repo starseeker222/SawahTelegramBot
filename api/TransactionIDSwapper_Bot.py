@@ -34,7 +34,7 @@ def extract_and_replace(url: str) -> str :
 
     print (url)
 
-    isScatter = any(substr in url for substr in ['[g%7CScatter][p%7Cios]', '_us_incent_cpi_besitos'])
+    isScatter = any(substr in url for substr in ['[g%7CScatter][p%7Cios]'])
 
     base_url = ''
     modified_url = ''
