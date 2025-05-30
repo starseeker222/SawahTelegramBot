@@ -83,7 +83,7 @@ def extract_and_replace(url: str) -> str :
     if not click_id or not transaction_id:
         return "Invalid URL: Missing click_id or transaction_id."
     
-    if isScatter and not ad_gorup or not label or not ip_address:
+    if isScatter and (not ad_gorup or not label or not ip_address):
         return "Invalid scatter URL: missing ad_group or label or ip_address "
 
     # Replace placeholders
